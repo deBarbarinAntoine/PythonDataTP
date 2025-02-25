@@ -1,0 +1,15 @@
+[run]
+#run the python program
+@venv/bin/python .
+
+[py/version]
+#show the python version installed in the virtual environment
+@venv/bin/python -V
+
+[install]
+#install a python package `name=<package>` in the virtual environment
+@venv/bin/python -m pip install ${name}
+
+[uninstall]
+#uninstall a python package `name=<package>` in the virtual environment
+@venv/bin/python -m pip uninstall ${name}
