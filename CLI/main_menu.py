@@ -24,6 +24,7 @@ def cli():
             'TP1.3 Identify and handle missing data',
             'TP1.4 Rapid exploration',
             'TP1.5 Advanced topics',
+            'TP2.1 Probabilities and statistics',
             title='Main Menu'
         )
 
@@ -42,3 +43,5 @@ def cli():
                 TP1_4.cli()  # Call CLI for TP1.4
             case 5:
                 TP1_5.cli()  # Call CLI for TP1.5
+            case 6:
+                TP2_1.cli()  # Call CLI for TP2.1

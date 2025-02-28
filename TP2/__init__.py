@@ -1,0 +1,1 @@
+from TP2.Part1 import *
