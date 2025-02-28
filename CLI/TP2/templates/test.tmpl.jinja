@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="description" content="{{ document.title }}">
+    <meta name="author" content="Antoine de Barbarin">
+    <meta name="keywords" content="Python, Ynov, TP, Data Manipulation">
+    <title>{{ document.title }}</title>
+</head>
+<body>
+
+    {# Cover page with title and document information #}
+    <article id="cover">
+        <h1>{{ document.title }}</h1>
+        <address>
+            Antoine de Barbarin
+            B2 Info
+            Aix Ynov Campus
+        </address>
+        <address>
+            antoine.debarbarin@ynov.com
+            https://adebarbarin.com
+        </address>
+    </article>
+
+    {# Table of contents #}
+    <article id="contents">
+        <h2>Table of contents</h2>
+        <h3>{{ document.title }}</h3>
+        <ul>
+            <li><a href="#introduction-title"></a></li>
+            <li><a href="#data-description-title"></a></li>
+            <li><a href="#results-title"></a></li>
+            <li><a href="#conclusion-title"></a></li>
+        </ul>
+    </article>
+
+    {# Main section of the document with principal content #}
+    <article id="introduction-page">
+        <h2 id="introduction-title">Introduction</h2>
+        <section>
+            <p>{{ document.overview }}</p>
+            <p></p>
+        </section>
+    </article>
+
+    <article id="data-description-page">
+        <h2 id="data-description-title">Data Description and Methodology</h2>
+        <section>
+            <p>{{ document.data_used }}</p>
+            <p></p>
+        </section>
+    </article>
+
+    <article id="results-page">
+        <h2 id="results-title">Results</h2>
+    <section>
+        {% for result in document.results %}
+            <div class="result-text">{{ result }}</div>
+        {% endfor %}
+        <p></p>
+    </section>
+    </article>
+
+    <article id="conclusion-page">
+        <h2 id="conclusion-title">Conclusion and Recommendations</h2>
+        <section>
+            <p>{{ document.conclusion }}</p>
+            <p></p>
+        </section>
+    </article>
+
+</body>
+</html>

@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def read_csv() -> pd.DataFrame:
@@ -124,4 +126,34 @@ def find_most_expensive(_data: pd.DataFrame) -> 'Book':
     max_price_book_data = _data.loc[max_price_index]
     
     return Book(max_price_book_data)
+
+
+def plot_sold_quantity_distribution(_data: pd.DataFrame) -> None:
+    """
+    Plots the distribution of sold quantities as a histogram.
+    
+    :param _data: DataFrame containing the data for multiple books.
+    """
+    plt.figure(figsize=(10, 6))
+    plt.hist(_data['Quantite_Vendue'], bins=30, edgecolor='k')
+    plt.title('Distribution of Sold Quantities')
+    plt.xlabel('Quantity Sold')
+    plt.ylabel('Frequency')
+    plt.grid(True)
+    plt.show()
+
+
+def estimate_probability_above_price(_data: pd.DataFrame, price: float, num_simulations: int = 10000) -> float:
+    """
+    Estimates the probability that a randomly selected book costs more than the price given.
+
+    :param _data: DataFrame containing the data for multiple books.
+    :param price: Number indicating the price of the book.
+    :param num_simulations: Number of simulations to run.
+    :return: Estimated probability.
+    """
+    prices = _data['Prix_Unitaire'].values
+    above_price_count = np.sum(prices > price)
+    
+    return above_price_count / num_simulations
         
