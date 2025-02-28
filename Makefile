@@ -1,5 +1,5 @@
 # This Makefile was done using 'domake'
-# Generated at 25/02/2025
+# Generated at 28/02/2025
 
 
 # =================================================================================== #
@@ -42,4 +42,16 @@ install:
 .PHONY: uninstall
 uninstall: 
 	@venv/bin/python -m pip uninstall ${name}
+	
+
+## req/set: creates/updates a requirements.txt file for the project
+.PHONY: req/set
+req/set: 
+	@venv/bin/pip3 freeze > requirements.txt
+	
+
+## req/install: install python dependencies according to requirements.txt file for the project
+.PHONY: req/install
+req/install: 
+	@venv/bin/python -m pip install -r requirements.txt
 

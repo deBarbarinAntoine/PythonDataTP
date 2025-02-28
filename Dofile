@@ -13,3 +13,11 @@
 [uninstall]
 #uninstall a python package `name=<package>` in the virtual environment
 @venv/bin/python -m pip uninstall ${name}
+
+[req/set]
+#creates/updates a requirements.txt file for the project
+@venv/bin/pip3 freeze > requirements.txt
+
+[req/install]
+#install python dependencies according to requirements.txt file for the project
+@venv/bin/python -m pip install -r requirements.txt
