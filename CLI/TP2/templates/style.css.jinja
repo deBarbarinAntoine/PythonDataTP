@@ -1,29 +1,29 @@
 @font-face {
     font-family: Fira Sans;
     font-weight: 400;
-    src: url(fonts/firasans-regular.otf);
+    src: url(templates/fonts/firasans-regular.otf);
 }
 @font-face {
     font-family: Fira Sans;
     font-style: italic;
     font-weight: 400;
-    src: url(fonts/firasans-italic.otf);
+    src: url(templates/fonts/firasans-italic.otf);
 }
 @font-face {
     font-family: Fira Sans;
     font-weight: 300;
-    src: url(fonts/firasans-light.otf);
+    src: url(templates/fonts/firasans-light.otf);
 }
 @font-face {
     font-family: Fira Sans;
     font-style: italic;
     font-weight: 300;
-    src: url(fonts/firasans-lightitalic.otf);
+    src: url(templates/fonts/firasans-lightitalic.otf);
 }
 @font-face {
     font-family: Fira Sans;
     font-weight: 700;
-    src: url(fonts/firasans-bold.otf);
+    src: url(templates/fonts/firasans-bold.otf);
 }
 
 @page {
@@ -72,7 +72,7 @@
     @top-right { content: none }
 }
 @page :first {
-    background: url('https://builtin.com/sites/www.builtin.com/files/hero-python-data-science-courses.jpg') 75% center / cover no-repeat;
+    background: url('templates/assets/cover-logo-solo.jpg') 75% center / cover no-repeat;
     margin: 0;
 }
 @page chapter {
@@ -116,6 +116,12 @@ h3 {
 }
 h4 {
     font-size: 13pt;
+}
+h5 {
+    font-size: 12pt;
+    font-weight: 500;
+    margin: 0;
+    padding: 1rem 0 .4rem 0;
 }
 
 #cover {
@@ -183,4 +189,16 @@ h4 {
     color: #fbc847;
     content: target-counter(attr(href), page);
     float: right;
+}
+
+section ul {
+    padding-top: 0;
+    margin-top: 0;
+}
+section .result-text .center {
+    width: 75%;
+    margin: 0 auto;
+}
+section .result-text img {
+    width: 100%;
 }

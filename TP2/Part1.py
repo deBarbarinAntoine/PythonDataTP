@@ -136,11 +136,12 @@ def plot_sold_quantity_distribution(_data: pd.DataFrame) -> None:
     """
     plt.figure(figsize=(10, 6))
     plt.hist(_data['Quantite_Vendue'], bins=30, edgecolor='k')
-    plt.title('Distribution of Sold Quantities')
+    plt.title('Sold Books Distribution')
     plt.xlabel('Quantity Sold')
     plt.ylabel('Frequency')
     plt.grid(True)
-    plt.show()
+    plt.savefig('CLI/TP2/templates/assets/sold_quantity_distribution.png', bbox_inches='tight')
+    plt.close()
 
 
 def estimate_probability_above_price(_data: pd.DataFrame, price: float, num_simulations: int = 10000) -> float:
