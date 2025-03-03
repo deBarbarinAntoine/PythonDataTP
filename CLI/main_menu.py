@@ -25,6 +25,7 @@ def cli():
             'TP1.4 Rapid exploration',
             'TP1.5 Advanced topics',
             'TP2.1 Probabilities and statistics',
+            'TP2.2 Panda, NumPy and Algebraic Analysis',
             title='Main Menu'
         )
 
@@ -45,3 +46,5 @@ def cli():
                 TP1_5.cli()  # Call CLI for TP1.5
             case 6:
                 TP2_1.cli()  # Call CLI for TP2.1
+            case 7:
+                TP2_2.cli()  # Call CLI for TP2.2
