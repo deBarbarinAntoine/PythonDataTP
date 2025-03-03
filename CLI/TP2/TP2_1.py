@@ -15,24 +15,32 @@ def cli():
     # Analyze the CSV data
     (stats, mean_price_per_genre) = analyze(data)
     
+    ##############################
+    # 1. Descriptive Statistics  #
+    ##############################
+    descr_statistics: list[str] = []
+    descr_statistics.append(f'<h3>Descriptive Statistics</h3>')
+    
+    descr_statistics.append('The descriptive statistics provide a snapshot of the central tendencies and variability within each variable:')
+    
     # Print the mean price per region
     print(Style.add('The mean price per genre is:', Style.Colors.CYAN, Style.Styles.BOLD))
     
-    results.append(f'The mean price per genre is:')
+    descr_statistics.append(f'<h5>The mean price per genre is:</h5>')
+    descr_statistics.append('<ul>')
     
     for col, mean in mean_price_per_genre.items():
         print(Style.add(f'{col}: {mean}', Style.Colors.BLUE))
-        results.append(f'{col}: {mean}')
+        descr_statistics.append(f'<li>{col}: {mean:.2f}</li>')
     print()
     
-    results.append('')
+    descr_statistics.append('</ul>')
+    descr_statistics.append('')
     
     confirm_continue()
     
     # Print the analyzed data for each numerical column
     print(Style.add('Analysis of each numerical column:', Style.Colors.CYAN, Style.Styles.BOLD))
-    
-    results.append('Analysis of each numerical column:')
     
     for col, stats in stats.items():
         print(Style.add(f"Descriptive statistics for column '{col}':", Style.Colors.CYAN, Style.Styles.BOLD))
@@ -45,18 +53,27 @@ def cli():
         print(Style.add(f"Q3: {stats.q3}", Style.Colors.BLUE))
         print(Style.add(f"Maximum: {stats.max}", Style.Colors.BLUE), end = '\n\n')
         
-        results.append(f"Descriptive statistics for column '{col}'")
-        results.append(f'Count: {stats.count}')
-        results.append(f'Mean: {stats.mean}')
-        results.append(f'Standard Deviation: {stats.std}')
-        results.append(f'Minimum: {stats.min}')
-        results.append(f'Q1: {stats.q1}')
-        results.append(f'Median: {stats.median}')
-        results.append(f'Q3: {stats.q3}')
-        results.append(f'Maximum: {stats.max}')
-        results.append('')
+        descr_statistics.append(f"<h5>{col}:</h5>")
+        descr_statistics.append('<ul>')
+        descr_statistics.append(f'<li>Count: {stats.count:.2f}</li>')
+        descr_statistics.append(f'<li>Mean: {stats.mean:.2f}</li>')
+        descr_statistics.append(f'<li>Standard Deviation: {stats.std:.2f}</li>')
+        descr_statistics.append(f'<li>Minimum: {stats.min:.2f}</li>')
+        descr_statistics.append(f'<li>Q1: {stats.q1:.2f}</li>')
+        descr_statistics.append(f'<li>Median: {stats.median:.2f}</li>')
+        descr_statistics.append(f'<li>Q3: {stats.q3:.2f}</li>')
+        descr_statistics.append(f'<li>Maximum: {stats.max:.2f}</li>')
+        descr_statistics.append('</ul>')
+        descr_statistics.append('')
         
         confirm_continue()
+        
+    results.append(''.join(descr_statistics))
+    
+    ##############################
+    # 2. Genre Analysis          #
+    ##############################
+    results.append(f'<h3>Genre Analysis</h3>')
     
     # Print the genre with the greater median of quantity of books sold
     genre, median = genre_with_best_median_sold_quantity(data)
@@ -66,12 +83,19 @@ def cli():
     print(Style.add(f'Genre: {genre}', Style.Colors.BLUE))
     print(Style.add(f'Median: {median}', Style.Colors.BLUE), end = '\n\n')
     
-    results.append('The genre with the greater median of quantity of books sold is:')
-    results.append(f'Genre: {genre}')
-    results.append(f'Median: {median}')
+    results.append('<h5>The genre with the greater median of quantity of books sold is:</h5>')
+    results.append('<ul>')
+    results.append(f'<li>Genre: {genre}</li>')
+    results.append(f'<li>Median: {median:.2f}</li>')
+    results.append('</ul>')
     results.append('')
     
     confirm_continue()
+    
+    ##############################
+    # 3. Most Expansive Book     #
+    ##############################
+    results.append(f'<h3>Most Expansive Book</h3>')
     
     # Print the most expensive book
     book_most_expensive = find_most_expensive(data)
@@ -86,19 +110,26 @@ def cli():
     print(Style.add(f"Region: {book_most_expensive.region}", Style.Colors.BLUE))
     print(Style.add(f"Sold At: {book_most_expensive.sold_at}", Style.Colors.BLUE), end = '\n\n')
     
-    results.append('The most expensive book is:')
-    results.append(f'ISBN: {book_most_expensive.isbn}')
-    results.append(f'Title: {book_most_expensive.title}')
-    results.append(f'Author: {book_most_expensive.author}')
-    results.append(f'Genre: {book_most_expensive.genre}')
-    results.append(f'Publication Year: {book_most_expensive.publication_year}')
-    results.append(f'Unit Price: {book_most_expensive.unit_price}')
-    results.append(f'Quantity Sold: {book_most_expensive.quantity_sold}')
-    results.append(f'Region: {book_most_expensive.region}')
-    results.append(f'Sold At: {book_most_expensive.sold_at}')
+    results.append('<h5>The most expensive book is:</h5>')
+    results.append('<ul>')
+    results.append(f'<li>ISBN: {book_most_expensive.isbn}</li>')
+    results.append(f'<li>Title: {book_most_expensive.title}</li>')
+    results.append(f'<li>Author: {book_most_expensive.author}</li>')
+    results.append(f'<li>Genre: {book_most_expensive.genre}</li>')
+    results.append(f'<li>Publication Year: {book_most_expensive.publication_year}</li>')
+    results.append(f'<li>Unit Price: {book_most_expensive.unit_price}</li>')
+    results.append(f'<li>Quantity Sold: {book_most_expensive.quantity_sold}</li>')
+    results.append(f'<li>Region: {book_most_expensive.region}</li>')
+    results.append(f'<li>Sold At: {book_most_expensive.sold_at}</li>')
+    results.append('</ul>')
     results.append('')
     
     confirm_continue()
+    
+    ##############################
+    # 4. Sold Books Distribution #
+    ##############################
+    results.append(f'<h3>Sold Books Distribution</h3>')
     
     # Plot the distribution of sold quantities
     plot_sold_quantity_distribution(data)
@@ -106,6 +137,11 @@ def cli():
     results.append('')
     
     confirm_continue()
+    
+    ##############################
+    # 5. Price Analysis          #
+    ##############################
+    results.append(f'<h3>Price Analysis</h3>')
     
     # Estimate the probability that a book costs more than 20 euros
     probability_above_20_euros = estimate_probability_above_price(data, 20)
