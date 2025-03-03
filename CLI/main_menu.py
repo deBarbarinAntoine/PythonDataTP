@@ -10,13 +10,13 @@ def cli():
     It provides options to load and explore data, understand data structure, identify and handle missing data,
     perform rapid exploration, and access advanced topics.
     """
-    
+
     while True:
         print('-' * 31)
         # Display welcome message with style
         print(Style.add(f"Welcome to Antoine's Python Data TP!"), Style.Colors.CYAN, Style.Styles.BOLD)
         print('-' * 31)
-        
+
         # Create a new menu with options and title
         menu = MenuCLI.new(
             'TP1.1 Load and explore the data',
@@ -26,7 +26,7 @@ def cli():
             'TP1.5 Advanced topics',
             'TP2.1 Probabilities and statistics',
             'TP2.2 Panda, NumPy and Algebraic Analysis',
-            title='Main Menu'
+            title = 'Main Menu'
         )
 
         # Run the menu and handle user input
