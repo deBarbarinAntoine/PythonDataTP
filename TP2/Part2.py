@@ -49,16 +49,30 @@ def scatter_plot(_data: pd.DataFrame, col1: str = None, col2: str = None):
     plt.show()
 
 
-def linear_regression_after_2010(_data: pd.DataFrame) -> tuple:
+def linear_regression_after_2010(_data: pd.DataFrame,
+                                 col1: str = 'Prix_Unitaire',
+                                 col2: str = 'Quantite_Vendue') -> tuple:
+
     post_2010_data = _data[ _data[ 'Annee_Publication' ] > 2010 ]
 
-    x = post_2010_data[ [ 'Prix_Unitaire' ] ]
-    y = post_2010_data[ 'Quantite_Vendue' ]
+    x = post_2010_data[ [ col1 ] ]
+    y = post_2010_data[ col2 ]
 
     model = LinearRegression()
     model.fit(x, y)
 
     slope = model.coef_[ 0 ]
     intercept = model.intercept_
+
+    plt.scatter(_data[ col1 ], _data[ col2 ])
+
+    plt.plot(_data[ col1 ], (slope * _data[ col1 ]) + intercept, color = 'red')
+
+    col1 = col1.replace('_', ' ').title()
+    col2 = col2.replace('_', ' ').title()
+    plt.xlabel(col1)
+    plt.ylabel(col2)
+    plt.title(f'Scatter Plot and linear regression of {col1} and {col2}')
+    plt.show()
 
     return slope, intercept
