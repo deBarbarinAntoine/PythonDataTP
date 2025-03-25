@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def read_csv() -> pd.DataFrame:
+def read_csv(drop_duplicates: bool = True) -> pd.DataFrame:
     """
     Reads data from a CSV file named 'ventes_livres.csv'.
 
@@ -16,7 +16,10 @@ def read_csv() -> pd.DataFrame:
     
     if _data is None:
         exit(1)
-    
+
+    if drop_duplicates:
+        _data = _data.drop_duplicates()
+
     return _data
 
 
