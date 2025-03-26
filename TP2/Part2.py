@@ -4,16 +4,18 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
 
-def ten_most_expensive_books(_data: pd.DataFrame):
+def ten_most_expensive_books(_data: pd.DataFrame) -> tuple[ float, float ]:
     # Sort by 'Prix_Unitaire' in descending order
     top_10 = _data.sort_values(by = 'Prix_Unitaire', ascending = False).head(10)
 
     # Calculate the sum and product
-    sum_prices = top_10[ 'Prix_Unitaire' ].sum()
-    product_prices = np.prod(top_10[ 'Prix_Unitaire' ])
+    sum_prices: float = top_10[ 'Prix_Unitaire' ].sum()
+    product_prices: float = np.prod(top_10[ 'Prix_Unitaire' ])
 
     print("Sum of prices of top 10 most expensive books:", sum_prices)
     print("Product of prices of top 10 most expensive books:", product_prices)
+
+    return sum_prices, product_prices
 
 
 def matrix_data(_data: pd.DataFrame, cols: list = None) -> pd.DataFrame:
