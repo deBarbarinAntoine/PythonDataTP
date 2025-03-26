@@ -18,10 +18,13 @@ def ten_most_expensive_books(_data: pd.DataFrame) -> tuple[ float, float ]:
     return sum_prices, product_prices
 
 
-def matrix_data(_data: pd.DataFrame, cols: list = None) -> pd.DataFrame:
+def matrix_data(_data: pd.DataFrame, cols: list = None, groupBy: str = '') -> pd.DataFrame:
     if cols is None:
         return _data
-    _matrix_data = _data[ cols ].values
+    if groupBy != '':
+        _matrix_data = _data.groupby(groupBy)[ cols ].sum()
+    else:
+        _matrix_data = _data[ cols ].values
     print(_matrix_data)
     return _matrix_data
 
@@ -48,7 +51,8 @@ def scatter_plot(_data: pd.DataFrame, col1: str = None, col2: str = None):
     plt.xlabel(col1)
     plt.ylabel(col2)
     plt.title(f'Scatter Plot of {col1} and {col2}')
-    plt.show()
+    plt.savefig('CLI/TP2/templates/assets/scatter_price_quantity-sold.png', bbox_inches='tight')
+    plt.close()
 
 
 def linear_regression_after_2010(_data: pd.DataFrame,
@@ -75,6 +79,7 @@ def linear_regression_after_2010(_data: pd.DataFrame,
     plt.xlabel(col1)
     plt.ylabel(col2)
     plt.title(f'Scatter Plot and linear regression of {col1} and {col2}')
-    plt.show()
+    plt.savefig('CLI/TP2/templates/assets/scatter_price_quantity-sold_linear-regression.png', bbox_inches='tight')
+    plt.close()
 
     return slope, intercept

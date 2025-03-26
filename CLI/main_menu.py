@@ -24,9 +24,7 @@ def cli():
             'TP1.3 Identify and handle missing data',
             'TP1.4 Rapid exploration',
             'TP1.5 Advanced topics',
-            'TP2.1 Probabilities and statistics',
-            'TP2.2 Algebraic analysis',
-            'TP2.3 Fast Fourier Transform',
+            'TP2   Probabilities, statistics and Fourier',
             title = 'Main Menu'
         )
 
@@ -46,8 +44,4 @@ def cli():
             case 5:
                 TP1_5.cli()  # Call CLI for TP1.5
             case 6:
-                TP2_1.cli()  # Call CLI for TP2.1
-            case 7:
-                TP2_2.cli()  # Call CLI for TP2.2
-            case 8:
-                TP2_3.cli()  # Call CLI for TP2.3
+                TP2_all.cli()  # Call CLI for TP2

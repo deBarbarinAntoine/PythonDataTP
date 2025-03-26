@@ -1,3 +1,5 @@
+from datetime import datetime
+import pytz
 from TP2 import *
 from Utils import *
 from jinja2 import Environment, FileSystemLoader
@@ -169,24 +171,91 @@ def cli():
     print(Style.add(f"\nEstimated probability that a book costs more than 20€: {probability_above_20_euros:.4f}", Style.Colors.CYAN, Style.Styles.BOLD))
 
     price_analysis.append(
-        f'<strong>Estimated probability that a book costs more than 20€</strong>: {probability_above_20_euros:.4f}')
+        f'<strong>The estimated probability that a book costs more than 20€ is</strong> {probability_above_20_euros:.4f}')
+    price_analysis.append('<br>')
 
     sum_prices, product_prices = ten_most_expensive_books(data)
 
     price_analysis.append(
-        f'Sum of prices of top 10 most expensive books: {sum_prices:.2f}€')
+        f'<strong>The sum of prices of top 10 most expensive books is</strong>: {sum_prices:.2f}€')
+    price_analysis.append('<br>')
     price_analysis.append(
-        f'Product of prices of top 10 most expensive books: {product_prices:.2f}€')
+        f'<strong>The product of prices of the top 10 most expensive books is</strong>: {product_prices:.2f}€')
+    price_analysis.append('<br>')
+    price_analysis.append('<br>')
 
     # TODO -> finish this part here!
-    matrix_prices = matrix_data(data, cols = [ 'Prix_Unitaire', 'Quantite_Vendue', 'Region' ])
-    covariance, correlation = cov_corr(data, col1 = 'Prix_Unitaire', col2 = 'Quantite_Vendue')
+    matrix_prices = matrix_data(data,
+                                cols = [ 'Prix_Unitaire', 'Quantite_Vendue' ],
+                                groupBy = 'Region')
+    prices_table = matrix_prices.to_html()
+    price_analysis.append(prices_table)
+    price_analysis.append('<br>')
+
+    covariance, correlation = cov_corr(data,
+                                       col1 = 'Prix_Unitaire',
+                                       col2 = 'Quantite_Vendue')
+    price_analysis.append(f'<p>The correlation is {correlation:.2f} and the covariance is {covariance[0][0]:.2f}.</p>')
     print(Style.add(f'correlation: {correlation:.2f}', Style.Colors.CYAN, Style.Styles.BOLD), end = '\n\n')
-    scatter_plot(data, col1 = 'Prix_Unitaire', col2 = 'Quantite_Vendue')
+    scatter_plot(data,
+                 col1 = 'Prix_Unitaire',
+                 col2 = 'Quantite_Vendue')
+
+    price_analysis.append('<div class="center">')
+    price_analysis.append('<img src="templates/assets/scatter_price_quantity-sold.png"'
+        ' alt="Scatter plot showing the books sold according to their prices.">')
+    price_analysis.append('</div>')
+    price_analysis.append('<p></p>')
     slope, intercept = linear_regression_after_2010(data)
     print(f'slope: {slope}\nintercept: {intercept}')
+    price_analysis.append(f'<div>The slope is {slope} and the intercept is {intercept}.</div>')
+
+    price_analysis.append('<p></p>')
+    price_analysis.append('<p></p>')
+    price_analysis.append('<div class="center">')
+    price_analysis.append('<img src="templates/assets/scatter_price_quantity-sold_linear-regression.png"'
+        ' alt="Scatter plot showing the books sold according to their prices with a linear regression.">')
+    price_analysis.append('</div>')
+
+    price_analysis.append(f'<div>According to the linear regression, we can say that the most expensive books tend to sell better.</div>')
 
     results.append(''.join(price_analysis))
+    results.append('')
+
+    ##############################
+    # 6. Selling dynamics          #
+    ##############################
+    results.append(f'<h3>5. Selling dynamics</h3>')
+    selling_dynamics: list[ str ] = [ ]
+
+    # Draw a Fast Fourier Transformation per date
+    plot_fft_of_sales(data)
+
+    selling_dynamics.append('<div class="center">')
+    selling_dynamics.append('<img src="templates/assets/fast_fourier_weekly.png" '
+                            'alt="Fast Fourier Weekly Price Analysis">')
+    selling_dynamics.append('</div>')
+
+    selling_dynamics.append('<div>According to this Fast Fourier Transformation, there is a slight increase in quantity of books sold every 3 days and a half.</div>')
+    selling_dynamics.append('<div>Except for this increase, it seems that the data are not very regular in that weekly visualization.</div>')
+
+    # Draw a Fast Fourier Transformation per month
+    plot_fft_of_monthly_sales(data)
+
+    selling_dynamics.append('<div class="center">')
+    selling_dynamics.append('<img src="templates/assets/fast_fourier_monthly.png" '
+                            'alt="Fast Fourier Monthly Price Analysis">')
+    selling_dynamics.append('</div>')
+
+    selling_dynamics.append(
+        '<div>According to this other plot, there is also a slight increase in quantity of books sold every 3 months approximately.</div>')
+    selling_dynamics.append(
+        '<div>That increase may correspond to special moments of the year, like feasts or promotion times.</div>')
+    selling_dynamics.append(
+        '<div>But apart that increase, the data are not extremely consistent in a monthly repartition.</div>')
+
+
+    results.append(''.join(selling_dynamics))
     results.append('')
 
     confirm_continue()
@@ -214,6 +283,8 @@ def cli():
         <ul>
         <li>A strong preference for History genre among consumers.</li>
         <li>Potential for growth in genres with lower median quantity sold.</li>
+        <li>A good opportunity with more expansive books.</li>
+        <li>Interesting dynamics in important moment of the year, maybe festivities and promotion times.</li>
         <li>The need for a deeper understanding of pricing strategies and factors influencing unit price variations.</li>
         </ul>
         <br>
@@ -238,10 +309,13 @@ def publish_template(title: str, overview: str, data_used: str, results: list[ s
     css_document = css_template.render(document = document)
 
     # Print the rendered template for testing
-    print(html_document)
+    # print(html_document)
+
+    # Generate the current date in 'YYYY-MM-DD' format
+    current_date = datetime.now(tz = pytz.timezone('Europe/Paris')).strftime('%Y-%m-%d')
 
     # Generate PDF from HTML/CSS templates
-    html_to_pdf(html_content = html_document, output_path = 'test.pdf', css_content = css_document)
+    html_to_pdf(html_content = html_document, output_path = f'books-report_{current_date}.pdf', css_content = css_document)
 
 
 class Document:

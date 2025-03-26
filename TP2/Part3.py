@@ -40,7 +40,8 @@ def plot_fft_of_sales(_data: pd.DataFrame) -> None:
     plt.xlabel('Frequency (1/week)')
     plt.ylabel('Amplitude')
     plt.grid(True)
-    plt.show()
+    plt.savefig('CLI/TP2/templates/assets/fast_fourier_weekly.png', bbox_inches='tight')
+    plt.close()
 
 
 def plot_fft_of_monthly_sales(_data: pd.DataFrame) -> None:
@@ -78,4 +79,5 @@ def plot_fft_of_monthly_sales(_data: pd.DataFrame) -> None:
     plt.ylabel('Amplitude')
 
     plt.grid(True)
-    plt.show()
+    plt.savefig('CLI/TP2/templates/assets/fast_fourier_monthly.png', bbox_inches='tight')
+    plt.close()
